@@ -6,8 +6,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Node modules (if you add later)
-node_modules/
 
 # Local files
 *.log
