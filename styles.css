@@ -1,0 +1,204 @@
+:root {
+    /* Typewriter screen colors */
+    --typewriter-bg: #f07868;
+    --typewriter-text: #f1f1f1;
+    
+    /* 3D Text colors */
+    --color-primary: #f6aca2;
+    --color-secondary: #f49b90;
+    --color-tertiary: #f28b7d;
+    --color-quaternary: #f07a6a;
+    --color-quinary: #ee6352;
+    --d-text-bg: #eff8e2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Anonymous Pro', monospace;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/*  COMMON SCREEN STYLES  */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/*  SCREEN 1: TYPEWRITER  */
+.intro-screen {
+    background-color: var(--typewriter-bg);
+    z-index: 2;
+    color: var(--typewriter-text);
+    transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+.intro-screen.slide-out {
+    transform: translateY(-100%);
+}
+
+.typewriter-text {
+    font-size: clamp(25px, 5vw, 38px);
+    line-height: 1.6;
+     font-weight: 600;
+    white-space: normal;
+    overflow: visible;
+    position: relative;
+    width: auto;
+    padding-right: 5px;
+    text-align: left;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* CRITICAL: Hide text initially so JavaScript can type it */
+.typewriter-text .line {
+    display: block;
+    min-height: 1.4em;
+}
+
+
+/* Moving cursor styling */
+.moving-cursor {
+    position: absolute;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    animation: blink-cursor 0.8s step-end infinite;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    display: none;
+    font-family: inherit; /* ADD: Use same font as parent */
+    font-size: inherit;   /* ADD: Match text size dynamically */
+    line-height: inherit; /* ADD: Match line height dynamically */
+}
+
+@keyframes blink-cursor {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/*  SCREEN 2: 3D TEXT ANIMATION  */
+.main-screen {
+    background-color: var(--d-text-bg);
+    z-index: 1;
+    opacity: 0;
+    /* CRITICAL FIX: Wait longer before appearing */
+    animation: fade-in 0.5s ease 11s forwards; /* Increased from 6s to 8s */
+}
+
+.content {
+    width: 100%;
+    max-width: 800px;
+}
+
+.text-shadows {
+    text-shadow: 
+        3px 3px 0 var(--color-secondary), 
+        6px 6px 0 var(--color-tertiary),
+        9px 9px var(--color-quaternary), 
+        12px 12px 0 var(--color-quinary);
+    font-family: 'Bungee', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: clamp(4.5rem, 12vw, 6.5rem);
+    margin: 0;
+    color: var(--color-primary);
+    /* CRITICAL FIX: Wait longer before starting 3D animation */
+    animation: shadows 1.2s ease-in infinite 11.5s; /* Increased from 6.5s to 8.5s */
+    letter-spacing: 0.4rem;
+    line-height: 1.3;
+}
+
+/* 3D animation keyframes */
+@keyframes shadows {
+    0% { text-shadow: none; }
+    10% { 
+        transform: translate(-3px, -3px);
+        text-shadow: 3px 3px 0 var(--color-secondary);
+    }
+    20% { 
+        transform: translate(-6px, -6px);
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary);
+    }
+    30% { 
+        transform: translate(-9px, -9px);
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary), 
+                     9px 9px var(--color-quaternary);
+    }
+    40% { 
+        transform: translate(-12px, -12px);
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary), 
+                     9px 9px var(--color-quaternary),
+                     12px 12px 0 var(--color-quinary);
+    }
+    50% { 
+        transform: translate(-12px, -12px);
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary), 
+                     9px 9px var(--color-quaternary),
+                     12px 12px 0 var(--color-quinary);
+    }
+    60% { 
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary), 
+                     9px 9px var(--color-quaternary),
+                     12px 12px 0 var(--color-quinary);
+    }
+    70% { 
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary), 
+                     9px 9px var(--color-quaternary);
+    }
+    80% { 
+        text-shadow: 3px 3px 0 var(--color-secondary),
+                     6px 6px 0 var(--color-tertiary);
+    }
+    90% { 
+        text-shadow: 3px 3px 0 var(--color-secondary);
+    }
+    100% { text-shadow: none; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/*  MOBILE OPTIMIZATION  */
+@media (max-width: 768px) {
+    .typewriter-text {
+        font-size: clamp(28px, 4vw, 24px);
+        line-height: 1.5;
+    }
+    
+    .typewriter-text .line {
+        min-height: 1.5em;
+    }
+    
+    .moving-cursor {
+        font-size: clamp(28px, 4vw, 24px);
+        line-height: 1.5;
+    }
+    
+    .text-shadows {
+        font-size: clamp(3.5rem, 8vw, 4rem);
+        letter-spacing: 0.2rem;
+    }
+}
